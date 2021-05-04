@@ -2,6 +2,7 @@ package mx.edu.itlp.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,7 +32,23 @@ public class ProductoJDBC implements ProductoDAO {
 			}
 		},
 				id);
-	}	
+	}
+	
+	@Override
+	public List<Producto> consultar() {
+		String sql_query = "SELECT * FROM productos";
+		return conexion.query(sql_query, new RowMapper<Producto>(){
+			public Producto mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Producto producto=new Producto();
+				producto.setId(rs.getInt("id"));
+				producto.setDescripcion(rs.getString("descripcion"));
+				producto.setPrecio(rs.getInt("precio"));
+				producto.setCodigo_barras(rs.getString("codigo_barras"));
+				producto.setExistencia(rs.getInt("existencia"));
+				return producto;
+        }
+    });
+	}
 }
 	
 

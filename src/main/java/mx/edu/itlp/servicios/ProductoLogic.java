@@ -1,5 +1,7 @@
 package mx.edu.itlp.servicios;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class ProductoLogic implements ProductoService{
 	@Override 
 	public Producto buscar(int id) {
 		return repositorio.buscar(id);
+	}
+	
+	@Override
+	public List<Producto> consultar() {
+		return repositorio.consultar();
 	}
 	
 }
