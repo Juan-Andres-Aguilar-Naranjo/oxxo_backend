@@ -1,5 +1,7 @@
 package mx.edu.itlp.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -28,5 +30,11 @@ public class ProductoWS {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 				return new ResponseEntity<Producto>(resultado,HttpStatus.OK);
+		}
+		
+		@GetMapping()
+		public ResponseEntity<?> consultar(){
+		    List<Producto> resultado = servicio.consultar();
+			return new ResponseEntity<List<Producto>>(resultado,HttpStatus.OK);
 		}
 } 
