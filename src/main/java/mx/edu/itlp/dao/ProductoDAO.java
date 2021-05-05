@@ -8,6 +8,7 @@ public interface ProductoDAO {
 
 	Producto buscar(int id);
 	List<Producto> consultar();
+	Producto insertar(Producto producto);
 
 }
 

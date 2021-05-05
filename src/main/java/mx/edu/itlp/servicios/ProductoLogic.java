@@ -23,5 +23,10 @@ public class ProductoLogic implements ProductoService{
 	public List<Producto> consultar() {
 		return repositorio.consultar();
 	}
+
+	@Override
+	public Producto insertar(Producto producto) {		
+		return repositorio.insertar(producto);
+	}
 	
 }

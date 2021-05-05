@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,7 @@ public class ProductoWS {
 		
 		@Autowired
 		ProductoService servicio;
+		
 		@GetMapping ("/{id}")
 		public ResponseEntity<?> buscar(@PathVariable int id){
 			Producto resultado=null; 
@@ -36,5 +39,17 @@ public class ProductoWS {
 		public ResponseEntity<?> consultar(){
 		    List<Producto> resultado = servicio.consultar();
 			return new ResponseEntity<List<Producto>>(resultado,HttpStatus.OK);
+		}
+		
+		@PostMapping()
+		public ResponseEntity<?> insertar(@RequestBody Producto producto){
+			Producto resultado = null;
+			try {
+				resultado = servicio.insertar(producto);
+			} catch (DataAccessException e) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+			
+			return new ResponseEntity<Producto>(resultado, HttpStatus.CREATED); 
 		}
 } 
