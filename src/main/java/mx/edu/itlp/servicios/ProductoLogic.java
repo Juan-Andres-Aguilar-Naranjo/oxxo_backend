@@ -28,5 +28,17 @@ public class ProductoLogic implements ProductoService{
 	public Producto insertar(Producto producto) {		
 		return repositorio.insertar(producto);
 	}
+
+	@Override
+	public void actualizar(Producto producto) {
+		repositorio.actualizar(producto);
+		
+	}
+
+	@Override
+	public void eliminar(int id) {
+		repositorio.eliminar(id);
+		
+	}
 	
 }

@@ -7,6 +7,7 @@ public class Producto {
 	private int precio;
 	private String codigo_barras;
 	private int existencia; 
+	private int activo;
 	
 	public int getId() {
 		return id;
@@ -38,5 +39,10 @@ public class Producto {
 	public void setExistencia(int existencia) {
 		this.existencia = existencia;
 	}
-	
+	public int getActivo() {
+		return activo;
+	}
+	public void setActivo(int activo) {
+		this.activo = activo;
+	}
 }

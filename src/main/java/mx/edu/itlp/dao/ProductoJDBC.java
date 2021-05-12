@@ -31,6 +31,7 @@ public class ProductoJDBC implements ProductoDAO {
 				producto.setPrecio(rs.getInt("precio"));
 				producto.setCodigo_barras(rs.getString("codigo_barras"));
 				producto.setExistencia(rs.getInt("existencia"));
+				producto.setActivo(rs.getInt("activo"));
 				return producto;
 			}
 		},
@@ -39,7 +40,7 @@ public class ProductoJDBC implements ProductoDAO {
 	
 	@Override
 	public List<Producto> consultar() {
-		String sql_query = "SELECT * FROM productos";
+		String sql_query = "SELECT * FROM productos WHERE activo=1";
 		return conexion.query(sql_query, new RowMapper<Producto>(){
 			public Producto mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Producto producto=new Producto();
@@ -48,6 +49,7 @@ public class ProductoJDBC implements ProductoDAO {
 				producto.setPrecio(rs.getInt("precio"));
 				producto.setCodigo_barras(rs.getString("codigo_barras"));
 				producto.setExistencia(rs.getInt("existencia"));
+				producto.setActivo(rs.getInt("activo"));
 				return producto;
         }
     });
@@ -69,8 +71,27 @@ public class ProductoJDBC implements ProductoDAO {
 		Number id = insert.executeAndReturnKey(datos);
 				
 		producto.setId(id.intValue());
-				
+		
+		producto.setActivo(1);
+		
 		return producto;
+	}
+
+	@Override
+	public void actualizar(Producto producto) {
+		String sql_update="UPDATE productos SET descripcion=?, precio=?,"
+				+ "codigo_barras=?, existencia=? WHERE id=?";
+		conexion.update(sql_update, producto.getDescripcion(),
+				producto.getPrecio(),
+				producto.getCodigo_barras(),
+				producto.getExistencia(),
+				producto.getId());
+	}
+
+	@Override
+	public void eliminar(int id) {
+		String sql_update="UPDATE productos SET activo=0 WHERE id=?";
+		conexion.update(sql_update,id);
 	}
 }
 	
