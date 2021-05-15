@@ -39,7 +39,7 @@ public class TicketJDBC implements TicketDAO {
 	
 	@Override
 	public List<Ticket> consultarTickets() {
-		String sql_query = "SELECT * FROM tickets";
+		String sql_query = "SELECT * FROM tickets WHERE activo=1";
 		return conexion.query(sql_query, new RowMapper<Ticket>(){
 			public Ticket mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Ticket ticket=new Ticket();
