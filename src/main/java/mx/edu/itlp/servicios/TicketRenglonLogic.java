@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.edu.itlp.dao.TicketRenglonDAO;
+import mx.edu.itlp.modelos.Importe;
 import mx.edu.itlp.modelos.TicketRenglon;
 
 @Service
@@ -39,4 +40,8 @@ public class TicketRenglonLogic implements TicketRenglonService {
 		repositorio.desactivar(id);
 	}
 
+	@Override
+	public List<Importe> obtenerImportes(int cajero_id) {		
+		return repositorio.obtenerImportes(cajero_id);
+	}
 }

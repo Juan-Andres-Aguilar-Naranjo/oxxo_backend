@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import mx.edu.itlp.modelos.Importe;
 import mx.edu.itlp.modelos.TicketRenglon;
 import mx.edu.itlp.servicios.TicketRenglonService;
 
@@ -83,5 +84,15 @@ public class TicketRenglonWS {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@GetMapping("/cajero/{cajero_id}")
+	public ResponseEntity<?> obtenerImportes(@PathVariable int cajero_id){
+		List<Importe> resultado = null;
+		try {
+			resultado = servicio.obtenerImportes(cajero_id);
+		} catch (DataAccessException e) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Importe>>(resultado, HttpStatus.OK);
+	}
 	
 }

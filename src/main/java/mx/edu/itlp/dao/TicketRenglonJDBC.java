@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import mx.edu.itlp.modelos.Importe;
 import mx.edu.itlp.modelos.TicketRenglon;
 
 @Repository
@@ -98,6 +99,23 @@ public class TicketRenglonJDBC implements TicketRenglonDAO {
 		String sql_update = "UPDATE ticket_renglones SET activo = 0 WHERE id = ?";
 		
 		conexion.update(sql_update, id);
+	}
+	
+	@Override
+	public List<Importe> obtenerImportes(int cajero_id) {
+		String sql_query = "SELECT importe, cajero_id "
+				+ "FROM tickets T "
+				+ "JOIN ticket_renglones TR ON (TR.ticket_id = T.id) "
+				+ "WHERE cajero_id = ?";
+		return conexion.query(sql_query, new RowMapper<Importe>() {
+			public Importe mapRow(ResultSet rs, int rowNum) throws SQLException {
+	           Importe importe = new Importe();	               
+	           importe.setImporte(rs.getFloat("importe"));	           
+	           importe.setCajero_id(rs.getInt("cajero_id"));
+	           
+	           return importe;
+	       }
+	    }, cajero_id);
 	}
 
 }
