@@ -103,7 +103,7 @@ public class TicketRenglonJDBC implements TicketRenglonDAO {
 	
 	@Override
 	public List<Importe> obtenerImportes(int cajero_id) {
-		String sql_query = "SELECT importe, cajero_id "
+		String sql_query = "SELECT SUM(importe)importe, cajero_id "
 				+ "FROM tickets T "
 				+ "JOIN ticket_renglones TR ON (TR.ticket_id = T.id) "
 				+ "WHERE cajero_id = ?";
@@ -113,7 +113,7 @@ public class TicketRenglonJDBC implements TicketRenglonDAO {
 	           importe.setImporte(rs.getFloat("importe"));	           
 	           importe.setCajero_id(rs.getInt("cajero_id"));
 	           
-	           return importe;
+	           return importe; 
 	       }
 	    }, cajero_id);
 	}
