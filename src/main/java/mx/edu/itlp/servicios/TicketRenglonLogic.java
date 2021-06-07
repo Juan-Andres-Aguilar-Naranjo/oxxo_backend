@@ -1,5 +1,6 @@
 package mx.edu.itlp.servicios;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class TicketRenglonLogic implements TicketRenglonService {
 	}
 
 	@Override
-	public List<Importe> obtenerImportes(int cajero_id) {		
-		return repositorio.obtenerImportes(cajero_id);
+	public List<Importe> obtenerImportes(int cajero_id, Timestamp fecha_inicial, Timestamp fecha_final) {		
+		return repositorio.obtenerImportes(cajero_id, fecha_inicial, fecha_final);
 	}
 }

@@ -1,5 +1,6 @@
 package mx.edu.itlp.controladores;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import mx.edu.itlp.modelos.Importe;
@@ -85,10 +87,10 @@ public class TicketRenglonWS {
 	}
 	
 	@GetMapping("/cajero/{cajero_id}")
-	public ResponseEntity<?> obtenerImportes(@PathVariable int cajero_id){
+	public ResponseEntity<?> obtenerImportes(@PathVariable int cajero_id, @RequestParam Timestamp fecha_inicial, Timestamp fecha_final){
 		List<Importe> resultado = null;
 		try {
-			resultado = servicio.obtenerImportes(cajero_id);
+			resultado = servicio.obtenerImportes(cajero_id, fecha_inicial, fecha_final);
 		} catch (DataAccessException e) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}

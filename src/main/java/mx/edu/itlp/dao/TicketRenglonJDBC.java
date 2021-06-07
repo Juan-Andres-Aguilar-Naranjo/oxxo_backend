@@ -2,6 +2,7 @@ package mx.edu.itlp.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,12 +103,15 @@ public class TicketRenglonJDBC implements TicketRenglonDAO {
 	}
 	
 	@Override
-	public List<Importe> obtenerImportes(int cajero_id) {
+	public List<Importe> obtenerImportes(int cajero_id, Timestamp fecha_inicial, Timestamp fecha_final) {
 		String sql_query = "SELECT SUM(importe)importe, cajero_id "
 				+ "FROM tickets T "
 				+ "JOIN ticket_renglones TR ON (TR.ticket_id = T.id) "
-				+ "WHERE cajero_id = ?";
+				+ "WHERE cajero_id = ? "
+				+ "AND T.fecha_hora BETWEEN ? AND ?";
 		return conexion.query(sql_query, new RowMapper<Importe>() {
+			
+			@Override
 			public Importe mapRow(ResultSet rs, int rowNum) throws SQLException {
 	           Importe importe = new Importe();	               
 	           importe.setImporte(rs.getFloat("importe"));	           
@@ -115,7 +119,7 @@ public class TicketRenglonJDBC implements TicketRenglonDAO {
 	           
 	           return importe; 
 	       }
-	    }, cajero_id);
+	    }, cajero_id, fecha_inicial, fecha_final);
 	}
 
 }
